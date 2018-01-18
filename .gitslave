@@ -2,3 +2,4 @@
 "git@github.com:ONSdigital/sbt-scala-defaults.git" "sbt-scala-defaults"
 "git@github.com:ONSdigital/sbt-play-defaults.git" "sbt-play-defaults"
 "git@github.com:ONSdigital/sbr-admin-data.git" "sbr-admin-data"
+"git@github.com:ONSdigital/sbr-api.git" "sbr-api"
