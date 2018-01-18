@@ -1,5 +1,20 @@
 version: '3'
 services:
+  sbr-api:
+    image: "ons-sbr-api:1.0.0-SNAPSHOT"
+    ports:
+     - "9002:9000"
+    environment:
+     - APPLICATION_SECRET=wF^UCO:x2eg/^Hd>Y7[@Ki/=MnPW5@eCSk;9oAAfe4xN2DEoy2zXEVj>RIgOmyDN
+     - ONS_SBR_CONTROL_BASE_HOST=http://sbr-control-api:9000/v1
+     - ONS_SBR_ADMIN_BASE=http://sbr-admin-data:9000/v1
+     - ONS_BI_BASE_ENDPOINT=http://bi-api:9000/v1
+  sbr-control-api:
+    image: "sbr-control-api:0.1-SNAPSHOT"
+    ports:
+     - "9001:9000"
+    environment:
+     - APPLICATION_SECRET=Fkn42Sd0Xw;EhdZ2MaXrPjf<WV16IYKn>JiSKL_bt/<uWYaGHMTemJFyX3WpAr6U
   sbr-admin-data:
     image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
     ports:
