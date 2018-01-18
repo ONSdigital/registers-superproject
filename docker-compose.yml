@@ -1,0 +1,13 @@
+version: '3'
+services:
+  sbr-admin-data:
+    image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
+    ports:
+      - "9003:9000"
+    environment:
+      - APPLICATION_SECRET=LjA5Q/f`7BHmN;GTXUo009JQ6:QTMQ8IF=^MN5Zv0yI_Lmke;DpwNrEY3>5=G=]j
+      - HBASE_REST_ENDPOINT=http://hbase:8080
+      - HBASE_INITIALIZE_DB=true
+  hbase:
+    image: "dajobe/hbase"
+    hostname: hbase
