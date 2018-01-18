@@ -1,2 +1,3 @@
 "git@github.com:ONSdigital/sbt-code-quality.git" "sbt-code-quality"
 "git@github.com:ONSdigital/sbt-scala-defaults.git" "sbt-scala-defaults"
+"git@github.com:ONSdigital/sbt-play-defaults.git" "sbt-play-defaults"
