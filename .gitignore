@@ -1,6 +1,2 @@
-/sbt-code-quality/
-/sbt-scala-defaults/
-/sbt-play-defaults/
-/sbr-admin-data/
-/sbr-api/
-/sbr-control-api/
+.idea/
+projects/

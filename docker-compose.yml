@@ -1,5 +1,11 @@
 version: '3'
 services:
+  sbr-ui:
+    image: "sbr-ui:latest"
+    ports:
+      - "3001:3001"
+#    environment:
+#      - SBR_API_URL=http://sbr-api:9000
   sbr-api:
     image: "ons-sbr-api:1.0.0-SNAPSHOT"
     ports:
@@ -9,6 +15,7 @@ services:
      - ONS_SBR_CONTROL_BASE_HOST=http://sbr-control-api:9000/v1
      - ONS_SBR_ADMIN_BASE=http://sbr-admin-data:9000/v1
      - ONS_BI_BASE_ENDPOINT=http://bi-api:9000/v1
+     - SBR_API_CORS_ALLOW_ALL=true
   sbr-control-api:
     image: "sbr-control-api:0.1-SNAPSHOT"
     ports:
