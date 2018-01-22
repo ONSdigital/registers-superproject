@@ -43,6 +43,7 @@ object Projects {
   )
 
   def build() {
+    println(io.Source.fromFile("banner.txt").mkString)
     gitUpdate()
     buildProjects()
   }

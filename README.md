@@ -36,6 +36,14 @@ A simple wrapper for `docker-compose` has been provided:
 
 ### Misc
 
+
+#### Banner
+
+The banner printed from the commands of this superproject was generated at 
+http://patorjk.com/software/taag/#p=display&f=Big&t=sbr%20superproject
+
+#### Docker cleanup commands
+
 To remove all stopped containers, run:
 
 ```bash
