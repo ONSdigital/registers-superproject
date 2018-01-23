@@ -30,6 +30,18 @@ A simple wrapper for `docker-compose` has been provided:
 ./run.sh
 ```
 
+## Play
+
+To tryout the applications (and ensure they're running) you can hit the following URLs:
+
+| App                 | URL(s)                                                                                                    | Notes                                 |
+| ------------------- | ----------------------------------                                                                        | ------------------------------------- |
+| sbr-ui              | http://localhost:3001                                                                                     | Login with admin/admin                |
+| sbr-api             | http://localhost:9002/swagger.json                                                                        | Swagger doc for API endpoints         |
+| sbr-control-api     | http://localhost:9002/swagger.json                                                                        | Swagger doc for API endpoints         |
+| sbr-admin-data      | http://localhost:9002/swagger.json                                                                        | Swagger doc for API endpoints         |
+| hbase               | http://localhost:16010/zk.jsp <br/> http://localhost:8085/rest.jsp <br/> http://localhost:9095/thrift.jsp | Zookeeper, Rest and Thrift endpoints  |
+
 ---
 ---
 

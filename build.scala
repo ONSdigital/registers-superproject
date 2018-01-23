@@ -5,30 +5,22 @@ import java.io.File
 
 import scala.sys.process._
 
-abstract class BaseProjectDef(val name: String,
-                              val localPath: String,
-                              val gitBaseUrl: String = "git@github.com:ONSdigital",
-                              val branch: Option[String],
-                              val buildCommand:  String)
-
-abstract class CategorisedProjectDef(val category: String,
-                                     override val name: String,
-                                     override val buildCommand: String,
-                                     override val branch: Option[String])
-  extends BaseProjectDef(name = name,
-    localPath = s"projects/$category/$name",
-    buildCommand = buildCommand,
-    branch = branch
-  )
+abstract class ProjectDef(val name: String,
+                          val category: String,
+                          val branch: Option[String],
+                          val buildCommand:  String) {
+  val localPath = s"projects/$category/$name"
+  val gitBaseUrl: String = "git@github.com:ONSdigital"
+}
 
 case class PluginProject(override val name: String, override val branch: Option[String] = None)
-  extends CategorisedProjectDef(category = "plugin", name = name, buildCommand = "sbt clean compile publishLocal", branch = branch)
+  extends ProjectDef(name = name, category = "plugin", buildCommand = "sbt clean compile publishLocal", branch = branch)
 
 case class ApiProject(override val name: String, override val branch: Option[String] = None)
-  extends CategorisedProjectDef(category = "api", name = name, buildCommand = "sbt clean compile docker:publishLocal", branch = branch)
+  extends ProjectDef(name = name, category = "api", buildCommand = "sbt clean compile docker:publishLocal", branch = branch)
 
 case class UiProject(override val name: String, override val branch: Option[String] = None)
-  extends CategorisedProjectDef(category = "ui", name = name, buildCommand = "docker build -t sbr-ui .", branch = branch)
+  extends ProjectDef(name = name, category = "ui", buildCommand = "docker build -t sbr-ui .", branch = branch)
 
 object Projects {
 
@@ -42,13 +34,15 @@ object Projects {
     UiProject("sbr-ui", Some("feature/dockerfile"))
   )
 
-  def build() {
+  def build(args: Array[String]) {
     println(io.Source.fromFile("banner.txt").mkString)
-    gitUpdate()
-    buildProjects()
+    val filteredDefinitions = definitions.filter(project => args.isEmpty || args.exists(_.equals(project.name)))
+    println(filteredDefinitions.map(_.name).mkString("Building projects ", ",", "..."))
+    gitUpdate(filteredDefinitions, args)
+    buildProjects(filteredDefinitions)
   }
 
-  private def gitUpdate() {
+  private def gitUpdate(definitions: List[ProjectDef], args: Array[String]) {
     println("Populating projects from git repos...")
     definitions.foreach(d => {
       val gitUrl = s"${d.gitBaseUrl}/${d.name}.git"
@@ -64,7 +58,7 @@ object Projects {
     })
   }
 
-  private def buildProjects() {
+  private def buildProjects(definitions: List[ProjectDef]) {
     definitions.foreach(d => {
       println(s"Building project ${d.name}...")
       Process(d.buildCommand, new File(d.localPath)).!
@@ -73,4 +67,4 @@ object Projects {
 
 }
 
-Projects.build()
+Projects.build(args)
