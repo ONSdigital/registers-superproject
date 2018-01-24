@@ -54,7 +54,7 @@ object Projects {
         println(s"Checking out branch ${d.branch.get} on repo ${gitUrl}...")
         Process(s"git checkout ${d.branch.get}", new File(d.localPath)).!
       }
-      s"cd ${d.localPath} && git pull" !
+      Process("git pull", new File(d.localPath)).!
     })
   }
 

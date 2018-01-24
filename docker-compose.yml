@@ -22,14 +22,42 @@ services:
      - "9001:9000"
     environment:
      - APPLICATION_SECRET=Fkn42Sd0Xw;EhdZ2MaXrPjf<WV16IYKn>JiSKL_bt/<uWYaGHMTemJFyX3WpAr6U
-  sbr-admin-data:
+  sbr-ch-data:
     image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
     ports:
       - "9003:9000"
     environment:
       - APPLICATION_SECRET=LjA5Q/f`7BHmN;GTXUo009JQ6:QTMQ8IF=^MN5Zv0yI_Lmke;DpwNrEY3>5=G=]j
       - HBASE_REST_ENDPOINT=http://hbase:8080
+      - HBASE_TABLE_NAME=ch
       - HBASE_INITIALIZE_DB=true
+      - CSV_FILE=conf/sample/201706/ch-data.csv
+      - CSV_HEADER_STRING=companyname
+      - SBR_VALIDATION_ID_REGEX=.{3,8}
+  sbr-vat-data:
+    image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
+    ports:
+      - "9004:9000"
+    environment:
+      - APPLICATION_SECRET=LjA5Q/f`7BHmN;GTXUo009JQ6:QTMQ8IF=^MN5Zv0yI_Lmke;DpwNrEY3>5=G=]j
+      - HBASE_REST_ENDPOINT=http://hbase:8080
+      - HBASE_TABLE_NAME=vat
+      - HBASE_INITIALIZE_DB=true
+      - CSV_FILE=conf/sample/201706/vat-data.csv
+      - CSV_HEADER_STRING=entref,vatref
+      - SBR_VALIDATION_ID_REGEX=.{12}
+  sbr-paye-data:
+    image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
+    ports:
+      - "9005:9000"
+    environment:
+      - APPLICATION_SECRET=LjA5Q/f`7BHmN;GTXUo009JQ6:QTMQ8IF=^MN5Zv0yI_Lmke;DpwNrEY3>5=G=]j
+      - HBASE_REST_ENDPOINT=http://hbase:8080
+      - HBASE_TABLE_NAME=paye
+      - HBASE_INITIALIZE_DB=true
+      - CSV_FILE=conf/sample/201706/paye-data.csv
+      - CSV_HEADER_STRING=entref,payeref
+      - SBR_VALIDATION_ID_REGEX=.{4,12}
   hbase:
     image: "dajobe/hbase"
     hostname: hbase
