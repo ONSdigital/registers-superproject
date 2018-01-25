@@ -30,7 +30,7 @@ object Projects {
     PluginProject("sbt-play-defaults"),
     ApiProject("sbr-api", Some("feature/REG-362")),
     ApiProject("sbr-control-api", Some("feature/REG-363")),
-    ApiProject("sbr-admin-data", Some("feature/REG-353")),
+    ApiProject("sbr-admin-data",Some("feature/REG-42")),
     UiProject("sbr-ui", Some("feature/dockerfile"))
   )
 
