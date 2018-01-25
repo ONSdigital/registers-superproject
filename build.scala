@@ -10,7 +10,8 @@ abstract class ProjectDef(val name: String,
                           val branch: Option[String],
                           val buildCommand:  String) {
   val localPath = s"projects/$category/$name"
-  val gitBaseUrl: String = "git@github.com:ONSdigital"
+  //val gitBaseUrl: String = "git@github.com:ONSdigital"
+  val gitBaseUrl: String = "https://github.com/ONSdigital"
 }
 
 case class PluginProject(override val name: String, override val branch: Option[String] = None)
@@ -19,8 +20,8 @@ case class PluginProject(override val name: String, override val branch: Option[
 case class ApiProject(override val name: String, override val branch: Option[String] = None)
   extends ProjectDef(name = name, category = "api", buildCommand = "sbt clean compile docker:publishLocal", branch = branch)
 
-case class UiProject(override val name: String, override val branch: Option[String] = None)
-  extends ProjectDef(name = name, category = "ui", buildCommand = "docker build -t sbr-ui .", branch = branch)
+case class UiProject(override val name: String, override val branch: Option[String] = None, override val buildCommand: String)
+  extends ProjectDef(name = name, category = "ui", buildCommand = buildCommand, branch = branch)
 
 object Projects {
 
@@ -31,7 +32,9 @@ object Projects {
     ApiProject("sbr-api", Some("feature/REG-362")),
     ApiProject("sbr-control-api", Some("feature/REG-353")),
     ApiProject("sbr-admin-data", Some("feature/REG-353")),
-    UiProject("sbr-ui", Some("feature/dockerfile"))
+    ApiProject("business-index-api", Some("feature/dockerfile")),
+    UiProject("sbr-ui", Some("feature/dockerfile"), "docker build -t sbr-ui ."),
+    UiProject("bi-ui", Some("feature/dockerfile"), "docker build -t bi-ui .")
   )
 
   def build(args: Array[String]) {
