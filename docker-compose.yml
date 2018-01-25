@@ -61,3 +61,7 @@ services:
   hbase:
     image: "dajobe/hbase"
     hostname: hbase
+    ports:
+      - "16010:16010"
+      - "8085:8085"
+      - "9095:9095"
