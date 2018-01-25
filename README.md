@@ -1,7 +1,7 @@
-# sbr superproject
+# registers superproject
 
 The purpose of this superproject is to simplify the process of working with
-the sbr projects.  The scripts provided take care of cloning the various git repos,
+the registers projects.  The scripts provided take care of cloning the various git repos,
 running the appropriate build command against each and running the apps using Docker 
 compose.
 
