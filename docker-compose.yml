@@ -12,9 +12,13 @@ services:
      - "9002:9000"
     environment:
      - APPLICATION_SECRET=wF^UCO:x2eg/^Hd>Y7[@Ki/=MnPW5@eCSk;9oAAfe4xN2DEoy2zXEVj>RIgOmyDN
-     - ONS_SBR_CONTROL_BASE_HOST=http://sbr-control-api:9000/v1
-     - ONS_SBR_ADMIN_BASE=http://sbr-admin-data:9000/v1
-     - ONS_BI_BASE_ENDPOINT=http://bi-api:9000/v1
+     - ONS_SBR_CONTROL_API_URL: http://sbr-control-api:9000/v1
+     - ONS_SBR_CH_ADMIN_DATA_API_URL: http://sbr-ch-data:9000/v1
+     - ONS_SBR_VAT_ADMIN_DATA_API_URL: http://sbr-vat-data:9000/v1
+     - ONS_SBR_PAYE_ADMIN_DATA_API_URL: http://sbr-paye-data:9000/v1
+     - ONS_BI_URL_ENDPOINT: http://bi-api:9000/v1
+     - ONS_SBR_CONTROL_ENTS_SEARCH: http://sbr-control-api:9000/v1/enterprises/
+     - ONS_SBR_CONTROL_ENTS_SEARCH_WITH_PERIOD: http://sbr-control-api:9000/v1/periods/date/enterprises/   
      - SBR_API_CORS_ALLOW_ALL=true
   sbr-control-api:
     image: "sbr-control-api:0.1-SNAPSHOT"
