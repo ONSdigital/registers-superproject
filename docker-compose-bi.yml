@@ -4,10 +4,21 @@ services:
     image: "bi-ui:latest"
     ports:
       - "3001:3001"
+      - "3002:3002"
     depends_on:
       - business-index-api
-#    environment:
-#      - SBR_API_URL=http://sbr-api:9000
+    environment:
+      - NODE_ENV=development
+      - SERVER_AUTH_URL=http://localhost:3002/auth
+      - SERVER_API_GW_URL=http://localhost:3002
+      - BI_UI_TEST_ADMIN_USERNAME=admin
+      - BI_UI_TEST_ADMIN_PASSWORD=admin
+      - BI_UI_TEST_USER_USERNAME=test
+      - BI_UI_TEST_USER_PASSWORD=test
+      - REACT_APP_ENV=local
+      - API_URL=http://business-index-api:9000
+      - REACT_APP_AUTH_URL=http://localhost:3001
+      - REACT_APP_API_URL=http://localhost:3001/api
   business-index-api:
     image: "ons-business-index-api:1.0"
     ports:
