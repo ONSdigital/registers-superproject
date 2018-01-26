@@ -1,11 +1,13 @@
 version: '3'
 services:
-#   bi-ui:
-#     image: "bi-ui-123:latest"
-#     ports:
-#       - "3001:3001"
-# #    environment:
-# #      - SBR_API_URL=http://sbr-api:9000
+  bi-ui:
+    image: "bi-ui:latest"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - business-index-api
+#    environment:
+#      - SBR_API_URL=http://sbr-api:9000
   business-index-api:
     image: "ons-business-index-api:1.0"
     ports:
@@ -13,7 +15,7 @@ services:
     environment:
      - APPLICATION_SECRET=wF^UCO:x2eg/^Hd>Y7[@Ki/=MnPW5@eCSk;9oAAfe4xN2DEoy2zXEVj>RIgOmyDN
      - environment=default
-     - ONS_BI_API_ES_URI=elasticsearch://172.19.0.2:9300
+     - ONS_BI_API_ES_URI=elasticsearch://elasticsearch:9300
      - ONS_BI_API_ES_CLUSTER_NAME=elasticsearch
      - ONS_BI_API_IMPORT_SAMPLE=true
     depends_on:
