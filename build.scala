@@ -10,7 +10,7 @@ abstract class ProjectDef(val name: String,
                           val branch: Option[String],
                           val buildCommand:  String) {
   val localPath = s"projects/$category/$name"
-  val gitBaseUrl: String = "git@github.com:ONSdigital"
+  val gitBaseUrl: String = "https://github.com/ONSdigital"
 }
 
 case class PluginProject(override val name: String, override val branch: Option[String] = None)
@@ -28,10 +28,10 @@ object Projects {
     PluginProject("sbt-code-quality"),
     PluginProject("sbt-scala-defaults"),
     PluginProject("sbt-play-defaults"),
-    ApiProject("sbr-api", Some("feature/REG-362")),
-    ApiProject("sbr-control-api", Some("feature/REG-363")),
-    ApiProject("sbr-admin-data",Some("feature/REG-42")),
-    UiProject("sbr-ui", Some("feature/dockerfile"))
+    ApiProject("sbr-api", Some("develop")),
+    ApiProject("sbr-control-api", Some("develop")),
+    ApiProject("sbr-admin-data", Some("develop")),
+    UiProject("sbr-ui", Some("develop"))
   )
 
   def build(args: Array[String]) {
@@ -47,11 +47,11 @@ object Projects {
     definitions.foreach(d => {
       val gitUrl = s"${d.gitBaseUrl}/${d.name}.git"
       if (!new File(d.localPath).exists()) {
-        println(s"Cloning ${gitUrl}...")
-        (s"git clone ${gitUrl} ${d.localPath}" !)
+        println(s"Cloning $gitUrl...")
+        s"git clone $gitUrl ${d.localPath}" !
       }
       if (d.branch.isDefined) {
-        println(s"Checking out branch ${d.branch.get} on repo ${gitUrl}...")
+        println(s"Checking out branch ${d.branch.get} on repo $gitUrl...")
         Process(s"git checkout ${d.branch.get}", new File(d.localPath)).!
       }
       Process("git pull", new File(d.localPath)).!

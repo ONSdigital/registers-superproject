@@ -4,8 +4,8 @@ services:
     image: "sbr-ui:latest"
     ports:
       - "3001:3001"
-#    environment:
-#      - SBR_API_URL=http://sbr-api:9000
+    environment:
+      - SBR_API_URL=http://sbr-api:9000
   sbr-api:
     image: "ons-sbr-api:1.0.0-SNAPSHOT"
     ports:
@@ -16,18 +16,18 @@ services:
      - ONS_SBR_CH_ADMIN_DATA_API_URL=http://sbr-ch-data:9000/v1
      - ONS_SBR_VAT_ADMIN_DATA_API_URL=http://sbr-vat-data:9000/v1
      - ONS_SBR_PAYE_ADMIN_DATA_API_URL=http://sbr-paye-data:9000/v1
-     - ONS_BI_URL_ENDPOINT=http://bi-api:9000/v1
+     - ONS_BI_URL_ENDPOINT=http://sbr-leu-data:9000/v1
      - ONS_SBR_CONTROL_ENTS_SEARCH=http://sbr-control-api:9000/v1/enterprises/
      - ONS_SBR_CONTROL_ENTS_SEARCH_WITH_PERIOD=http://sbr-control-api:9000/v1/periods/date/enterprises/   
      - SBR_API_CORS_ALLOW_ALL=true
   sbr-control-api:
-    image: "sbr-control-api:0.1-SNAPSHOT"
+    image: "ons-sbr-control-api:0.1-SNAPSHOT"
     ports:
      - "9001:9000"
     environment:
      - APPLICATION_SECRET=Fkn42Sd0Xw;EhdZ2MaXrPjf<WV16IYKn>JiSKL_bt/<uWYaGHMTemJFyX3WpAr6U
   sbr-ch-data:
-    image: "sbr-admin-data:0.1.0-SNAPSHOT"
+    image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
     ports:
       - "9003:9000"
     environment:
@@ -39,7 +39,7 @@ services:
       - HEADER_STRING=companyname
       - SBR_VALIDATION_ID_REGEX=.{3,8}
   sbr-vat-data:
-    image: "sbr-admin-data:0.1.0-SNAPSHOT"
+    image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
     ports:
       - "9004:9000"
     environment:
@@ -51,7 +51,7 @@ services:
       - HEADER_STRING=vatref
       - SBR_VALIDATION_ID_REGEX=.{12}
   sbr-paye-data:
-    image: "sbr-admin-data:0.1.0-SNAPSHOT"
+    image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
     ports:
       - "9005:9000"
     environment:
@@ -62,6 +62,17 @@ services:
       - CSV_FILE=conf/sample/201706/paye-data.csv
       - HEADER_STRING=payeref
       - SBR_VALIDATION_ID_REGEX=.{4,12}
+  sbr-leu-data:
+      image: "ons-sbr-admin-data:0.1.0-SNAPSHOT"
+      ports:
+        - "9006:9000"
+      environment:
+        - HBASE_REST_ENDPOINT=http://hbase:8080
+        - HBASE_TABLE_NAME=leu
+        - HBASE_INITIALIZE_DB=true
+        - CSV_FILE=conf/sample/201706/leu-data.csv
+        - HEADER_STRING=id
+        - SBR_VALIDATION_ID_REGEX=.{12,16}
   hbase:
     image: "dajobe/hbase"
     hostname: hbase
